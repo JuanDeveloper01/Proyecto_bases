@@ -1,0 +1,11 @@
+Juan Perez salcedo cruz|1|1098872342|12|05|1990|1500003
+
+Jennifer Estrada martinez|2|1700123420|29|11|1980|2005003
+
+Claudia Trejos ramirez bazco|3|4209805896|02|05|1990|15000033
+
+juan carlos patino hernandez|4|108802346|02|03|2012|1555377999
+
+ana maria ballesteros hurtado|5|10088004324|15|09|1990|20000000
+
+jose conrado patio ramirez|6|1221826|12|23|1933|20000000
