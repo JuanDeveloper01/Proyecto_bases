@@ -30,16 +30,13 @@ int menu(){
 
 int modificar(){
   int Basedat3 = 0;
-  cout<<" Que quieres hacer con la base de datos. \n\n 1.Listar Todas Las Personas \n 2.Adicionar un registro \n 3.Eliminar registro dada cedula \n 4.Actualizar registro dada cedula \n 5.Buscar registro por nombre \n 6.Buscar registro por cedula \n 7. Ir a un numero de registro\n 8.Cargar archivo\n\n\n\n";
+  cout<<" Que quieres hacer con la base de datos. \n\n 1.Listar Todas Las Personas \n 2.Adicionar un registro \n 3.Buscar Registro Dado Nombre \n 4.Actualizar registro dada cedula \n 5.Actualizar registro por nombre \n 6.Buscar registro por cedula \n 7. Ir a un numero de registro\n 8.Cargar archivo\n\n\n\n";
   cout<<"\n\n ingresa Opcion:";
   cin>> Basedat3;
   return Basedat3;
 	
 };
 
-void plantilla(){
-	 cout << "|         Nombre      |   Id  |  Cedula | Dia_Nacimiento |Mes_Nacimiento |Ano_Nacimiento|Ganancia anual|\n\n\n\n" ;
-}
 
 //FUNCION PRINCIPAL DEL PROGRAMA
 	
@@ -64,7 +61,7 @@ break;
   system("cls");	
  //programa de registros en modo txt 
   int abrir;
-  
+  int recorre;
   long int identificador3;
   char cedula3[20];
   char nombre3[50];
@@ -76,6 +73,12 @@ break;
   char continuar;   
   char guardar;
   bool sal;
+  bool encontro=false;
+  int volver=0;
+  bool salto=false;
+  int next=1;
+  bool nexti=false;
+  
 	  switch (modificar()) {
 		case 1: 
 		        
@@ -88,7 +91,7 @@ break;
 					}
 					
 					while((abrir = getc(DataBase3)) != EOF)
-						{}
+						{
 						    if(paso==0){
 						    cout<<"Nombre:  ";	
 							 paso ++;
@@ -153,6 +156,7 @@ break;
 				             		
 		
 		break;
+		
 		case 2: 
 		DataBase3 = fopen("Base_Datos.txt","a+");
 		system ("cls");
@@ -204,7 +208,95 @@ break;
 			
 		break;  
   		case 3: 
-		cout<<"3";
+  		DataBase3 = fopen("Base_Datos.txt","a+");
+  		char Buscar[50];
+  		cout<<"Ingresa el nombre, para buscar el registro:  ";
+  		cin.getline(Buscar, sizeof(Buscar), '.');
+  		cout<<"\n\n\n\n\n\n";
+  		
+				if (DataBase3 == NULL)
+					{
+						cout << "EL ARCHIVO ORIGEN DE LA BASE DE DATOS NO EXISTE ...... INSERTAR ARCHIVO  ";
+						return 1;
+					}
+					
+					while((recorre = getc(DataBase3)) != EOF)					
+						{  
+							if(Buscar[volver]==recorre)
+							{  
+								volver++;
+								if(volver==(strlen(Buscar)))
+								{	
+								    encontro=true;								
+									cout<<"\n\n\nEncontre La Persona\n\n\n";
+									cout<<Buscar;
+								}
+							}else if(encontro!=true){
+									volver=1;
+								} else if(recorre == '|' ){
+									cout<<"\n";		
+									if(next==1&& nexti==false)
+										{
+									    	cout<<"identificador:  ";	
+										 	next ++;
+										 	nexti=true;
+										 	
+									    }	
+										if(next==2 && nexti==false)
+											{
+										    	cout<<"cedula:  ";	
+											 	next ++;
+											 	nexti=true;
+										    }	
+											if(next==3&& nexti==false)
+												{
+											    	cout<<"Dia de nacimiento:  ";	
+												 	next ++;
+												 	nexti=true;
+											    }							
+	               								if(next==4 && nexti==false)
+													{
+												    	cout<<"Mes de nacimiento:  ";	
+													 	next ++;
+													 	nexti=true;
+												    }	
+													if(next==5&& nexti==false)
+														{
+													    	cout<<"Anio nacimiento:  ";	
+														 	next ++;
+														 	nexti=true;
+													    }		
+														if(next==6&& nexti==false)
+															{
+														    	cout<<"Ganancia anual:  ";															 	
+														    }							
+																							    		             
+											}else if(recorre=='\n'){
+												salto=true;
+												break;
+											}
+											else if (salto!=true){ 																						
+													printf("%c",recorre);	
+													nexti=false;
+						                         }  		
+				  		               
+  		                }
+  		
+  		
+
+	cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza.... \n\n\n";
+		cin>>continuar;
+		if(continuar == 's')
+		{
+			system ("cls");
+		}else{
+			system ("cls");
+			cout<<"Adios un placer Servirte\n\n\n";
+			salir=false;
+		}
+		
+		fclose(DataBase3);  		
+  		
 		break;
 		case 4: 
 		cout<<"4";

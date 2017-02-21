@@ -1,63 +1,9 @@
-case 3:
- //programa de registros en modo txt 
-  DataBase3 = fopen("Base_Datos.txt","r");
-  int abrir;
-  long int identificador3;
-  char cedula3[20];
-  char nombre3[50];
-  unsigned char Dia_nacimiento3;
-  unsigned char Mes_nacimiento3; 
-  unsigned short int  Ano_nacimiento3;
-  unsigned long int Ganancia_anual3; 	
-  int Basedat3 = 0;
-  cout<<" Que quieres hacer con la base de datos. \n\n 1.Listar Registros \n 2.Adicionar un registro \n 3.Eliminar registro dada cedula \n 4.Actualizar registro dada cedula \n 5.Buscar registro por nombre \n 6.Buscar registro por cedula \n 7. Ir a un numero de registro\n\n\n";
-  cout<<"\n\n ingresa Opcion:";
-  cin>> Basedat3;	  
-	  switch (Basedat3) {
-		case 1: 
-		cout<<"                               Registros\n\n";
-		if (DataBase3 == NULL){
-			cout << "EL ARCHIVO ORIGEN DE LA BASE DE DATOS NO EXISTE ...... INSERTAR ARCHIVO  ";
-			return 1;
-		}
-		while((abrir = getc(DataBase3)) != EOF){
-			if(abrir == '|' ) printf("\n ");
-			else printf("%abrir",abrir);	
-			
-		}
-		
-		break;
-		case 2: 
-		cout<<"2";
-		break;  
-  		case 3: 
-		cout<<"3";
-		break;
-		case 4: 
-		cout<<"4";
-		break;		
-  		case 5: 
-		cout<<"5";
-		break;
-		case 6: 
-		cout<<"6";
-		break;
-		case 7: 
-		cout<<"7";
-		break;			
-  		};
-  
-  break; 
-
-};   
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7/////  
-
-fclose(DataBase3);
-
-system("PAUSE");
-return 0;
-
-
-}
-
+Juan Perez salcedo cruz|1|1098872342|12|05|1990|1500003
+Jennifer Estrada martinez|2|1700123420|29|11|1980|2005003
+Claudia Trejos ramirez bazco|3|4209805896|02|05|1990|15000033
+juan carlos patino hernandez|4|108802346|02|03|2012|1555377999
+ana maria ballesteros hurtado|5|10088004324|15|09|1990|20000000
+jose conrado patio ramirez|6|1221826|12|23|1933|20000000
+joaquin albeiro campos|7|108298938|20|09|1970|45000
+maria consuelo hernandez|8|24363597|12|09|2016|1600000
 

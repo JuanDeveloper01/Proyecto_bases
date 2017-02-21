@@ -9,3 +9,9 @@ juan carlos patino hernandez|4|108802346|02|03|2012|1555377999
 ana maria ballesteros hurtado|5|10088004324|15|09|1990|20000000
 
 jose conrado patio ramirez|6|1221826|12|23|1933|20000000
+
+joaquin albeiro campos|7|108298938|20|09|1970|45000
+
+maria consuelo hernandez|8|24363597|12|09|2016|1600000
+
+daniel hernando becerra|9|10988777|23|12|1990|4000000
