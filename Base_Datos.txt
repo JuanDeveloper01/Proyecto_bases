@@ -1,17 +1,23 @@
-Juan Perez salcedo cruz|1|1098872342|12|05|1990|1500003
 
-Jennifer Estrada martinez|2|1700123420|29|11|1980|2005003
+Juan Perez salcedo cruz|01|1098872342|12|05|1990|1500003
 
-Claudia Trejos ramirez bazco|3|4209805896|02|05|1990|15000033
+Jennifer Estrada martinez|02|1700123420|29|11|1980|2005003
 
-juan carlos patino hernandez|4|108802346|02|03|2012|1555377999
+Claudia Trejos ramirez bazco|03|4209805896|02|05|1990|15000033
 
-ana maria ballesteros hurtado|5|10088004324|15|09|1990|20000000
+juan carlos patino hernandez|04|1088023446|02|03|2012|1555377999
 
-jose conrado patio ramirez|6|1221826|12|23|1933|20000000
+ana maria ballesteros hurtado|05|10088004324|15|09|1990|20000000
 
-joaquin albeiro campos|7|108298938|20|09|1970|45000
+jose conrado patio ramirez|06|1221826|12|23|1933|20000000
 
-maria consuelo hernandez|8|24363597|12|09|2016|1600000
+joaquin albeiro campos|07|108298938|20|09|1970|45000
 
-daniel hernando becerra|9|10988777|23|12|1990|4000000
+maria consuelo hernandez|08|24363597|12|09|2016|1600000
+
+daniel hernando becerra|09|10988777|23|12|1990|4000000
+
+vicente fernandez chalupa|10|10674533|04|12|2017|2000
+
+alejandra jurado uribe|11|1143931834|05|04|1990|400000
+
