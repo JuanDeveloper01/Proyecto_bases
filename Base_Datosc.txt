@@ -22,3 +22,5 @@
 11|1143931834|alejandra jurado uribe|05|04|1990|70000000
 
 13|1087723|cristofer antonio campos|13|23|2017|1223999
+
+17|1076234|maria casas pino verde|12|11|2000|1092830

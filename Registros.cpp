@@ -1,4 +1,4 @@
-/*--------------------------------------------------------------------
+/* -------------------------------------------------------------------
 AUTORES: JUAN CARLOS PATIÑO HERNANDEZ (1088023446) 
 PROGRAMA: REGISTROS BASES DE DATOS
 FECHA:07/02/2017
@@ -18,7 +18,6 @@ FILE *DataBase0;
 FILE *DataBase3; 
 FILE *DataBase2; 
 
-
 int menu(){  
    int program = 0;	
       printf( " ......................PROGRAMA DE REGISTROS..................  \n\n");
@@ -30,7 +29,7 @@ int menu(){
 
 int modificar(){
   int Basedat3 = 0;
-  cout<<" Que quieres hacer con la base de datos. \n\n 1.Listar Todas Las Personas \n 2.Adicionar un registro \n 3.Buscar Registro Dado Nombre \n 4.Buscar Registro Dada Cedula \n 5.Eliminar registro por cedula \n 6.Actualizar registro por cedula \n 7. Ir a un numero de registro\n 8.Cargar archivo\n\n\n\n";
+  cout<<" Que quieres hacer con la base de datos. \n\n 1.Listar Todas Las Personas \n 2.Adicionar un registro \n 3.Buscar Registro Dada Cedula \n 4.Buscar Registro Dado Nombre \n 5.Eliminar registro por cedula \n 6.Actualizar registro por cedula \n 7. Ir a un numero de registro\n 8.Cargar archivo\n\n\n\n";
   cout<<"\n\n ingresa Opcion:";
   cin>> Basedat3;
   return Basedat3;
@@ -60,6 +59,7 @@ break;
  case 3: 	
   system("cls");	
  //programa de registros en modo txt 
+ //programa de registros en modo txt 
   int abrir;
   int recorre;
   long int identificador3;
@@ -69,7 +69,8 @@ break;
   char Mes_nacimiento3[2]; 
   unsigned short int  Ano_nacimiento3;
   unsigned long int Ganancia_anual3; 
-  int paso=0;
+  int paso=1;
+  int paso2=0;
   char continuar;   
   char guardar;
   bool sal;
@@ -82,10 +83,12 @@ break;
   char  identificadorG[5];					//varibale que me guarda el identificador cuando consulto por cedula	
   int i=1;			
   int N=0;						//esta es la variable de nombre						
+  int nm=1;
+  char nombrado[50];	  
 	  switch (modificar()) {
 		case 1: 
 		        
-  				DataBase3 = fopen("Base_Datos.txt","r");
+  				DataBase3 = fopen("Base_Datosc.txt","r");
 				cout<<"                               Base de Datos\n\n";
 				if (DataBase3 == NULL)
 					{
@@ -94,24 +97,20 @@ break;
 					}
 					
 					while((abrir = getc(DataBase3)) != EOF)
-						{
-						    if(paso==0){
-						    cout<<"Nombre:  ";	
-							 paso ++;
-						    }
+						{   												    
 							if(abrir == '|' )
 							{
 								cout<<"\n";	
 									if(paso==1&& sal == false)
 										{
-									    	cout<<"identificador:  ";	
+									    	cout<<"cedula:  ";	
 										 	paso ++;
 										 	sal=true;
 										 	
 									    }	
 										if(paso==2 && sal == false)
 											{
-										    	cout<<"cedula:  ";	
+										    	cout<<"Nombre:  ";	
 											 	paso ++;
 											 	sal=true;
 										    }	
@@ -161,16 +160,19 @@ break;
 		break;
 		
 		case 2: 
-		DataBase3 = fopen("Base_Datos.txt","a+");
+		
+
+		DataBase3 = fopen("Base_Datosc.txt","a+");
 		system ("cls");
 		cout<<" \n\n                   Adicion de personas...        \n\n";
-		
-		cout <<"Nombre:  ";
-		cin.getline(nombre3, sizeof(nombre3), '.');	
+
 		cout <<"identificador:  ";
 		cin>>identificador3;			
 		cout <<"Cedula:  ";
-		cin>>cedula3;			
+		cin>>cedula3;		
+		cout <<"Nombre:  "<<flush;
+		cin.get(); 
+		cin.getline(nombre3, sizeof(nombre3), '.');		
 		cout <<"Dia_nacimiento:  ";
 		cin>>Dia_nacimiento3;		
 		cout <<"Mes_nacimiento:  ";
@@ -183,10 +185,10 @@ break;
 		cout << "       Desea Guardar La información      S guardar y N para volver al menu ";
 		cin>>guardar;
 		if(guardar == 's')
-			{   
-				fprintf(DataBase3,"\n%s|",nombre3);
-				fprintf(DataBase3,"%i|",identificador3);
+			{   				
+				fprintf(DataBase3,"\n%i|",identificador3);
 				fprintf(DataBase3,"%s|",cedula3);
+				fprintf(DataBase3,"%s|",nombre3);
 				fprintf(DataBase3,"%s|",Dia_nacimiento3);
 				fprintf(DataBase3,"%s|",Mes_nacimiento3);	
 				fprintf(DataBase3,"%i|",Ano_nacimiento3);
@@ -211,7 +213,7 @@ break;
 			
 		break;  
   		case 3: 
-  		DataBase3 = fopen("Base_Datos.txt","a+");
+  		DataBase3 = fopen("Base_Datosc.txt","a+");
   		char Buscar[50];
   		cout<<"Ingresa el nombre, para buscar el registro:  ";
   		cin.getline(Buscar, sizeof(Buscar), '.');
@@ -310,8 +312,8 @@ break;
 		break;
 		case 4: 
 		
-		DataBase3 = fopen("Base_Datos.txt","a+");
-  		cout<<"Ingresa la cedula, para buscar el registro:  ";
+		DataBase3 = fopen("Base_Datosc.txt","a+");
+  		cout<<"Ingresa El Nombre, para buscar el registro:  ";
   		cin.getline(Buscar, sizeof(Buscar), '.');
   		cout<<"\n\n\n\n\n\n";
   		
@@ -352,7 +354,7 @@ break;
 												}
 												
 											}
-											cout<<"Nombre:  ";	
+											cout<<"ID:  ";	
 											while(1){
 												if(i==N){
 													break;
@@ -363,7 +365,7 @@ break;
 												
 											}
 											N=1;
-											cout<<"\nIdentificador:  ";
+											cout<<"\nCedula:  ";
 											while(1){
 												if(nombreG[i+N]=='|'){
 													break;
@@ -441,13 +443,12 @@ break;
 		cout<<"7";
 		break;			
 		case 8: 
-		char nombredata[30];
-					
-		  		DataBase3 = fopen("Base_Datos.txt","a+");
-				cout<<"ingresa nombre de la base de datos a incluir:  ";
-				cin>>nombredata;			
-				DataBase0= fopen("Base_Datos2.txt","a+");		
-								
+		char c[50];
+		int i=0;
+				cout<<"ingresa el nombre del txt el cual se va a cargar:   ";
+				cin>>c;				
+		  		DataBase3 = fopen("Base_Datosc.txt","a+");							
+				DataBase0= fopen(c,"a+");									
 				if (DataBase0 == NULL)
 					{
 						cout << "EL ARCHIVO ORIGEN DE LA BASE DE DATOS NO EXISTE ...... INSERTAR ARCHIVO  ";
@@ -455,10 +456,13 @@ break;
 					}
 					
 					while((abrir = getc(DataBase0)) != EOF)
-						{							
-						fprintf(DataBase3,"%c",abrir);	
-						                         
+						{		
+						if(abrir=='|'){
+							i++;
+						}					
+						fprintf(DataBase3,"%c",abrir);							                         
 						}
+				cout<<"\n\n\n " <<i/6<<"  Registros Exportados con exito \n\n\n";		
 				cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
 				cin>>continuar;
 				if(continuar == 's')
@@ -489,6 +493,4 @@ return 0;
 
 
 }
-
-
 
