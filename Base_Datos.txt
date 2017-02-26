@@ -22,3 +22,5 @@
 11|1143931834|alejandra jurado uribe|05|04|1990|70000000
 
 13|1087723|cristofer antonio campos|13|23|2017|1223999
+
+18|1087632|armando pinares del mar|12|11|1998|1087236630

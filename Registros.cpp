@@ -88,7 +88,7 @@ break;
 	  switch (modificar()) {
 		case 1: 
 		        
-  				DataBase3 = fopen("Base_Datosc.txt","r");
+  				DataBase3 = fopen("Base_Datos.txt","r");
 				cout<<"                               Base de Datos\n\n";
 				if (DataBase3 == NULL)
 					{
@@ -162,7 +162,7 @@ break;
 		case 2: 
 		
 
-		DataBase3 = fopen("Base_Datosc.txt","a+");
+		DataBase3 = fopen("Base_Datos.txt","a+");
 		system ("cls");
 		cout<<" \n\n                   Adicion de personas...        \n\n";
 
@@ -192,7 +192,7 @@ break;
 				fprintf(DataBase3,"%s|",Dia_nacimiento3);
 				fprintf(DataBase3,"%s|",Mes_nacimiento3);	
 				fprintf(DataBase3,"%i|",Ano_nacimiento3);
-				fprintf(DataBase3,"%i",Ganancia_anual3);				
+				fprintf(DataBase3,"%i\n",Ganancia_anual3);				
 			
 			}else{
 				cout<<"datos no guardados...";
@@ -213,20 +213,23 @@ break;
 			
 		break;  
   		case 3: 
-  		DataBase3 = fopen("Base_Datosc.txt","a+");
   		char Buscar[50];
-  		cout<<"Ingresa el nombre, para buscar el registro:  ";
+		DataBase3 = fopen("Base_Datos.txt","a+");
+  		cout<<"Ingresa La Cedula, para buscar el registro:  ";
   		cin.getline(Buscar, sizeof(Buscar), '.');
   		cout<<"\n\n\n\n\n\n";
   		
-				if (DataBase3 == NULL)
-					{
-						cout << "EL ARCHIVO ORIGEN DE LA BASE DE DATOS NO EXISTE ...... INSERTAR ARCHIVO  ";
-						return 1;
-					}
-					
 					while((recorre = getc(DataBase3)) != EOF)					
-						{   
+						{  
+						if(recorre =='\n' )
+							{	
+							  i=1;									
+									
+							}else{	
+								nombreG[i]=recorre;
+								i++;									
+										
+								}
 							if(Buscar[volver]==recorre)
 							{  
 								volver++;
@@ -235,7 +238,7 @@ break;
 								    encontro=true;				
 									system ("cls");				
 									cout<<"\n\n\nEncontre La Persona\n\n\n";
-									cout<<"__________________________________________________________________________________________________";
+									cout<<"\n\n__________________________________________________________________________________________________\n\n";
 									cout<<Buscar;
 								}
 							}else if(encontro!=true){
@@ -243,42 +246,61 @@ break;
 								} else if(recorre == '|' ){
 									cout<<"\n";		
 									if(next==1&& nexti==false)
-										{
-									    	cout<<"identificador:  ";	
+										{   i=1;
+										    N=1;
+											while(1){
+												if(nombreG[i]=='|'){												
+														break;												       
+												}else {
+													i++;
+												}
+												
+											}
+											cout<<"ID:  ";	
+											while(1){
+												if(i==N){
+													break;
+												}else{
+													cout<<nombreG[N];
+													N++;
+												} 
+												
+											}
+											N=1;
+											cout<<"\nCedula:  ";
+											while(1){
+												if(nombreG[i+N]=='|'){
+													break;
+												}else{
+													cout<<nombreG[i+N];
+													N++;
+												}
+												
+											}								
+									    	cout<<"\nDia de nacimiento:  ";	
 										 	next ++;
 										 	nexti=true;
 										 	
 									    }	
 										if(next==2 && nexti==false)
 											{
-										    	cout<<"cedula:  ";	
+										    	cout<<"Mes de nacimiento:  ";	
 											 	next ++;
 											 	nexti=true;
 										    }	
 											if(next==3&& nexti==false)
 												{
-											    	cout<<"Dia de nacimiento:  ";	
+											    	cout<<"Anio de nacimiento:  ";	
 												 	next ++;
 												 	nexti=true;
 											    }							
 	               								if(next==4 && nexti==false)
 													{
-												    	cout<<"Mes de nacimiento:  ";	
-													 	next ++;
+												    	cout<<"Ganancia anual:  ";	
 													 	nexti=true;
+													 	next=1;	
 												    }	
-													if(next==5&& nexti==false)
-														{
-													    	cout<<"Anio nacimiento:  ";	
-														 	next ++;
-														 	nexti=true;
-													    }		
-														if(next==6&& nexti==false)
-															{
-														    	cout<<"Ganancia anual:  ";	
-																nexti=true;
-																next=1;														 	
-														    }							
+																				
 																							    		             
 											}else if(recorre=='\n'){
 												salto=true;
@@ -290,12 +312,14 @@ break;
 						                         }  		
 				  		               
   		                }
+				  		               
+  		                
   		
-  		
+  	
 	if(encontro!=true){
-		 cout<<"\n\n\n No se encontro la persona..\n\n\n";
+		 cout<<"\n\n\n NO SE ENCONTRO LA PERSONA..\n\n\n";
 		 
-		 }
+		 }  		
 	cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza.... \n\n\n";
 		cin>>continuar;
 		if(continuar == 's')
@@ -307,12 +331,17 @@ break;
 			salir=false;
 		}
 		
-		fclose(DataBase3);  		
+		fclose(DataBase3);
   		
-		break;
+  		
+  		
+  		
+  		
+  		
+  		
+  		break;
 		case 4: 
-		
-		DataBase3 = fopen("Base_Datosc.txt","a+");
+		DataBase3 = fopen("Base_Datos.txt","a+");
   		cout<<"Ingresa El Nombre, para buscar el registro:  ";
   		cin.getline(Buscar, sizeof(Buscar), '.');
   		cout<<"\n\n\n\n\n\n";
@@ -441,13 +470,109 @@ break;
 		break;
 		case 7: 
 		cout<<"7";
-		break;			
+  		DataBase3 = fopen("Base_Datos.txt","a+");
+  		
+  		cout<<"Ingresa Numero de registr para ir al registro:  ";
+  		cin>>Buscar;
+  		cout<<"\n\n\n\n\n\n";
+  		
+				if (DataBase3 == NULL)
+					{
+						cout << "EL ARCHIVO ORIGEN DE LA BASE DE DATOS NO EXISTE ...... INSERTAR ARCHIVO  ";
+						return 1;
+					}
+					
+					while((recorre = getc(DataBase3)) != EOF)					
+						{   
+							if(Buscar[volver]==recorre)
+							{  
+								volver++;
+								if(volver==(strlen(Buscar)))
+								{	
+								    encontro=true;				
+									system ("cls");				
+									cout<<"\n\n\nEncontre El Registro\n\n\n";
+									cout<<"__________________________________________________________________________________________________";
+									cout<<" \n"<<"ID:"<<Buscar;
+								}
+							}else if(encontro!=true){
+									volver=1;
+								} else if(recorre == '|' ){
+									cout<<"\n";		
+									if(next==1&& nexti==false)
+										{
+									    	cout<<"Cedula:  ";	
+										 	next ++;
+										 	nexti=true;
+										 	
+									    }	
+										if(next==2 && nexti==false)
+											{
+										    	cout<<"Nombre:  ";	
+											 	next ++;
+											 	nexti=true;
+										    }	
+											if(next==3&& nexti==false)
+												{
+											    	cout<<"Dia de nacimiento:  ";	
+												 	next ++;
+												 	nexti=true;
+											    }							
+	               								if(next==4 && nexti==false)
+													{
+												    	cout<<"Mes de nacimiento:  ";	
+													 	next ++;
+													 	nexti=true;
+												    }	
+													if(next==5&& nexti==false)
+														{
+													    	cout<<"Anio nacimiento:  ";	
+														 	next ++;
+														 	nexti=true;
+													    }		
+														if(next==6&& nexti==false)
+															{
+														    	cout<<"Ganancia anual:  ";	
+																nexti=true;
+																next=1;														 	
+														    }							
+																							    		             
+											}else if(recorre=='\n'){
+												salto=true;
+												break;
+											}
+											else if (salto!=true){ 																						
+													printf("%c",recorre);	
+													nexti=false;
+						                         }  		
+				  		               
+  		                }
+  		
+  		
+	if(encontro!=true){
+		 cout<<"\n\n\n No se encontro la persona..\n\n\n";
+		 
+		 }
+	cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza.... \n\n\n";
+		cin>>continuar;
+		if(continuar == 's')
+		{
+			system ("cls");
+		}else{
+			system ("cls");
+			cout<<"Adios un placer Servirte\n\n\n";
+			salir=false;
+		}
+		
+		fclose(DataBase3);  		
+  		
+		break;		
 		case 8: 
 		char c[50];
 		int i=0;
 				cout<<"ingresa el nombre del txt el cual se va a cargar:   ";
 				cin>>c;				
-		  		DataBase3 = fopen("Base_Datosc.txt","a+");							
+		  		DataBase3 = fopen("Base_Datos.txt","a+");							
 				DataBase0= fopen(c,"a+");									
 				if (DataBase0 == NULL)
 					{
