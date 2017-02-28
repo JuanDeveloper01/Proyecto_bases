@@ -36,6 +36,28 @@ int modificar(){
 	
 };
 
+void sust_a(void)
+{
+    FILE *arch;
+    char car; 
+    arch=fopen("Base_Datos2.txt","r+");
+    if (!arch){
+            perror("El archivo no se pudo abrir\n");
+            return;
+    }
+
+    while (fscanf(arch,"%c",&car)!=EOF)
+    {
+        if (car=='a')
+        {
+            fseek(arch, -1, SEEK_CUR);
+            fputc('*', arch);
+            fflush(arch);
+        }
+    }
+    fclose(arch);
+}
+
 
 //FUNCION PRINCIPAL DEL PROGRAMA
 	
@@ -210,6 +232,7 @@ break;
 			
 		break;  
   		case 3: 
+  		sust_a();
   		DataBase3 = fopen("Base_Datos.txt","a+");
   		char Buscar[50];
   		cout<<"Ingresa el nombre, para buscar el registro:  ";
