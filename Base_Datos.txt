@@ -5,8 +5,7 @@
 
 82541|4209805896|Claudia Trejos ramirez bazco|02|05|1990|1500
 
-23844|1088023446|juan carlos patino hernandez|17|08|1995|5600
-
+21844|1088023446|juan carlos patino hernandez|17|08|1995|5600                                                                                                                              
 95657|100880043|ana maria ballesteros hurtado|15|09|1990|1500
 
 77779|12218263|jose conrado patio ramirez|12|23|1933|17000000
@@ -57,4 +56,3 @@
 
 57552|1076234|maria casas pino verde|12|11|2000|109283000000
 
-29558|1782934|juadith hurtado|12|02|1990|13000

@@ -203,6 +203,9 @@ break;
   int N=0;																			//esta es la variable de nombre						
   int nm=1;																			//variable que me recorre los char				
   char nombrado[50];	  															//variable temporal de nombre
+  int borrar=0;
+  int uno=0;
+  bool salto2=false;
 	  switch (modificar()) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	  	//Lectura del fichero 
@@ -338,7 +341,7 @@ break;
 //Busqueda por cedula///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
   		
-		eliminaRe('s');
+		//eliminaRe('s');
 		char Buscar[50];
 		DataBase3 = fopen("Base_Datos.txt","a+");
   		cout<<"Ingresa La Cedula, para buscar el registro:  ";
@@ -369,10 +372,11 @@ break;
 								}
 							}else if(encontro!=true){
 									volver=1;
-								} else if(recorre == '|' ){
+								} else if(recorre == '|' ){									
 									cout<<"\n";		
 									if(next==1&& nexti==false)
-										{   i=1;
+										{
+										   i=1;
 										    N=1;
 											while(1){
 												if(cedulaG[i]=='|'){												
@@ -590,31 +594,90 @@ break;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
 //////////////////////////////////////////////////Eliminar registro por cedula/////////////////////////////////////////////////////////////////////////////////  		
-	    DataBase3 = fopen("Base_Datos.txt","a+");
+	    DataBase3 = fopen("Base_Datos.txt","r+");
 		system("cls");
-		char eliminar[18];
-		int ID;
-		
-		
+
 		cout<<"\n\n RECUERDA QUE SI ELIMINAS UN REGISTRO NO LO PODRAS RECUPERAR...\n";
 		cout<<"ingresa la cedula:  ";
-  		cin>>eliminar;
-  		
- 		ID = Busqueda(eliminar);
- 		
- 		cout<<"revise pues perro"<<ID;
- 		if(ID==0){
-		 cout<<"\n\n\n NO SE ENCONTRO LA PERSONA..\n\n\n";
-		 
-		 }else{
-		 	
-		 	
-		 	
-		 	
-		 }
-		   
-		 
-		
+  		cin>>Buscar;
+  		cout<<"\n\n\n\n\n\n";
+//////////////////////Ciclo que me busca por cedula///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					while((recorre = getc(DataBase3)) != EOF)					
+						{  
+						if(recorre =='\n' )
+							{	
+							  i=1;							
+									
+							}else{	
+								cedulaG[i]=recorre;
+								i++;					
+										
+								}
+							if(Buscar[volver]==recorre)
+							{  
+								volver++;
+								if(volver==(strlen(Buscar)))
+								{	
+								    encontro=true;				
+									system ("cls");				
+									cout<<"\n\n\nEncontre La Persona\n\n\n";
+									cout<<"\n\n__________________________________________________________________________________________________\n\n";
+									cout<<"Se ha eliminado la persona con registro de cedula:  "<<Buscar<<"\n\n\n";
+								}
+							}else if(encontro!=true){
+									volver=1;
+								} else if(recorre == '|' and salto2==false){
+									if(next==1&& nexti==false)
+										{   i=1;
+										    N=1;
+											while(1){
+												if(cedulaG[i]=='|'){								
+														break;												       
+												}else {
+													i++;
+												      }												
+											       }	
+											while(1){												
+												if(i==N){
+													borrar=	i+strlen(Buscar);																							
+													break;
+												}else{
+													cout<<"REGISTRO ELIMINADO EXITOSAMENTE....";
+													N++;
+												}   
+												
+											}
+											N=1;
+											salto2=true;	
+										 	next ++;
+										 	nexti=true;
+										 	
+									    }															
+																							    		             
+											}else if(recorre=='\n'){
+												salto=true;
+												break;
+											}
+											else if (salto!=true){
+											
+											while(uno<=strlen(cedulaG)){
+											    if(uno==0)
+												{			
+									            fseek(DataBase3,-(borrar+2), SEEK_CUR);
+												}
+									            fputc(' ', DataBase3);
+									            fflush(DataBase3);
+									            uno++;
+									            nexti=false;
+												}
+											}
+				  		               
+  		                }
+  		                
+
+		if(encontro!=true){
+			cout<<"\n\n\n NO SE ENCONTRO EL REGISTRO DE LA CEDULA.....\n\n\n\n";
+		}
 		cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza.... \n\n\n";
 		cin>>continuar;
 		if(continuar == 's')
@@ -629,6 +692,8 @@ break;
 		
 		break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		case 6: 
 		cout<<"6";
 		break;
