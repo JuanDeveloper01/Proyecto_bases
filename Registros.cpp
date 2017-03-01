@@ -118,34 +118,7 @@ int Busqueda(char Buscar[18]){
 		
 }
 
-void eliminaRe(char cambio)
-{
-    FILE *arch;
-    char car; 
-    int uno=0;
-    arch=fopen("Base_Datos2.txt","r+");
-    if (!arch){
-            perror("El archivo no se pudo abrir\n");
-            return;
-    }
 
-    while (fscanf(arch,"%c",&car)!=EOF)
-    {
-        if (car==cambio&&uno==0)
-        { while(uno<=7){
-		    if(uno==0){			
-            fseek(arch,-7, SEEK_CUR);
-            
-			}
-            fputc('*', arch);
-            fflush(arch);
-            uno++;
-            
-			}
-        }
-    }
-    fclose(arch);
-}
 
 
 
@@ -169,10 +142,17 @@ case 1:
 //programa de registros variables
 break;
 case 2:
-	
-
-  
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+//************************************************************************************************************************************************************//
+//************************************************************************************************************************************************************//
+// ***********************************************************************************************************************************************************//
+//************************************************************************************************************************************************************//
+//*******************************************************MANEJO DE ARCHIVOS TEXTO*****************************************************************************//
+//************************************************************************************************************************************************************//
+//************************************************************************************************************************************************************//
+//************************************************************************************************************************************************************//
+//************************************************************************************************************************************************************//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	  
  //programa de registros en modo txt  
@@ -198,7 +178,7 @@ break;
   int next=1;																		//variable para identidad de datos y ademas saber cual es su nobre
   bool nexti=false;																	//variable que me permite dar identidad a los datos
   char nombreG[50];                       											//variable que me guarda el nombre cuando consukto por cedula
-  char  cedulaG[50];																//varibale que me guarda el identificador cuando consulto por cedula	
+  char cedulaG[50];																//varibale que me guarda el identificador cuando consulto por cedula	
   int i=1;																			//variable que me recorre los char
   int N=0;																			//esta es la variable de nombre						
   int nm=1;																			//variable que me recorre los char				
@@ -206,6 +186,8 @@ break;
   int borrar=0;
   int uno=0;
   bool salto2=false;
+  char Buscar[50];
+  
 	  switch (modificar()) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	  	//Lectura del fichero 
@@ -286,7 +268,7 @@ break;
 		case 2: 
 //adicionar personas al fichero por consola		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
-        eliminaRe('s');
+        
 		DataBase3 = fopen("Base_Datos.txt","a+"); // me abre el fichero para lectura y escritura
 		system ("cls"); //limpia la pantalla
 		cout<<" \n\n                   Adicion de personas...        \n\n";
@@ -340,13 +322,11 @@ break;
   		case 3: 
 //Busqueda por cedula///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
-  		
-		//eliminaRe('s');
-		char Buscar[50];
-		DataBase3 = fopen("Base_Datos.txt","a+");
+		DataBase3 = fopen("Base_Datos.txt","r");
   		cout<<"Ingresa La Cedula, para buscar el registro:  ";
   		cin>>Buscar;
   		cout<<"\n\n\n\n\n\n";
+  		char cedulaGo[50];  ///ojo con esta variable
 //////////////////////Ciclo que me busca por cedula///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					while((recorre = getc(DataBase3)) != EOF)					
 						{  
@@ -355,7 +335,7 @@ break;
 							  i=1;							
 									
 							}else{	
-								cedulaG[i]=recorre;
+								cedulaGo[i]=recorre;
 								i++;					
 										
 								}
@@ -365,7 +345,7 @@ break;
 								if(volver==(strlen(Buscar)))
 								{	
 								    encontro=true;				
-									system ("cls");				
+									//system ("cls");				
 									cout<<"\n\n\nEncontre La Persona\n\n\n";
 									cout<<"\n\n__________________________________________________________________________________________________\n\n";
 									cout<<"Encontre A a la persona que buscas por la cedula:  "<<Buscar<<"\n\n\n";
@@ -379,7 +359,7 @@ break;
 										   i=1;
 										    N=1;
 											while(1){
-												if(cedulaG[i]=='|'){												
+												if(cedulaGo[i]=='|'){												
 														break;												       
 												}else {
 													i++;
@@ -392,7 +372,7 @@ break;
 													cout<<"cedula: "<<Buscar;
 													break;
 												}else{
-													cout<<cedulaG[N];
+													cout<<cedulaGo[N];
 													N++;
 												}   
 												
@@ -426,20 +406,17 @@ break;
 												    	cout<<"Ganacia anual:  ";	
 													 	nexti=true;
 													 	next++;	
-												    }	
-																				
+												    }																				
 																							    		             
 											}else if(recorre=='\n'){
 												salto=true;
 												break;
-											}
-											else if (salto!=true){ 																						
+											}else if (salto!=true){ 																						
 													printf("%c",recorre);	
 													nexti=false;
 						                         }  		
 				  		               
-  		                }
-				  		               
+  		                }             
   		                
   		
   	
@@ -463,13 +440,14 @@ break;
   		
   		
   		
-  		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
   		
   		break;
 		case 4: 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		DataBase3 = fopen("Base_Datos.txt","a+");
+		char nombreGos[50];
   		cout<<"Ingresa El Nombre, para buscar el registro:  ";
   		cin.getline(Buscar, sizeof(Buscar), '.');
   		cout<<"\n\n\n\n\n\n";
@@ -481,7 +459,7 @@ break;
 							  i=1;									
 									
 							}else{	
-								nombreG[i]=recorre;
+								nombreGos[i]=recorre;
 								i++;									
 										
 								}
@@ -504,7 +482,7 @@ break;
 										{   i=1;
 										    N=1;
 											while(1){
-												if(nombreG[i]=='|'){												
+												if(nombreGos[i]=='|'){												
 														break;												       
 												}else {
 													i++;
@@ -516,7 +494,7 @@ break;
 												if(i==N){
 													break;
 												}else{
-													cout<<nombreG[N];
+													cout<<nombreGos[N];
 													N++;
 												} 
 												
@@ -524,10 +502,10 @@ break;
 											N=1;
 											cout<<"\nCedula:  ";
 											while(1){
-												if(nombreG[i+N]=='|'){
+												if(nombreGos[i+N]=='|'){
 													break;
 												}else{
-													cout<<nombreG[i+N];
+													cout<<nombreGos[i+N];
 													N++;
 												}
 												
@@ -595,8 +573,8 @@ break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  		
 //////////////////////////////////////////////////Eliminar registro por cedula/////////////////////////////////////////////////////////////////////////////////  		
 	    DataBase3 = fopen("Base_Datos.txt","r+");
+	    char cedulaComp[50];
 		system("cls");
-
 		cout<<"\n\n RECUERDA QUE SI ELIMINAS UN REGISTRO NO LO PODRAS RECUPERAR...\n";
 		cout<<"ingresa la cedula:  ";
   		cin>>Buscar;
@@ -609,7 +587,7 @@ break;
 							  i=1;							
 									
 							}else{	
-								cedulaG[i]=recorre;
+								cedulaComp[i]=recorre;
 								i++;					
 										
 								}
@@ -631,18 +609,18 @@ break;
 										{   i=1;
 										    N=1;
 											while(1){
-												if(cedulaG[i]=='|'){								
+												if(cedulaComp[i]=='|'){								
 														break;												       
 												}else {
 													i++;
 												      }												
 											       }	
 											while(1){												
-												if(i==N){
+												if(i==N){													
+													cout<<"REGISTRO ELIMINADO EXITOSAMENTE....";
 													borrar=	i+strlen(Buscar);																							
 													break;
 												}else{
-													cout<<"REGISTRO ELIMINADO EXITOSAMENTE....";
 													N++;
 												}   
 												
@@ -660,7 +638,7 @@ break;
 											}
 											else if (salto!=true){
 											
-											while(uno<=strlen(cedulaG)){
+											while(uno<=strlen(cedulaComp)){
 											    if(uno==0)
 												{			
 									            fseek(DataBase3,-(borrar+2), SEEK_CUR);
@@ -669,6 +647,7 @@ break;
 									            fflush(DataBase3);
 									            uno++;
 									            nexti=false;
+									            next=1;
 												}
 											}
 				  		               
@@ -689,7 +668,7 @@ break;
 			salir=false;
 		}
 		fclose(DataBase3);
-		
+	
 		break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////7		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
