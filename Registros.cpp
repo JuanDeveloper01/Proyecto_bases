@@ -674,10 +674,246 @@ break;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 		case 6: 
-		cout<<"6";
+	    DataBase3 = fopen("Base_Datos.txt","r+");
+	    char cedulaRe[50];
+	    char cedulaBe[50];
+		system("cls");
+		cout<<"\n\n RECUERDA QUE SI REEMPLAZAS UN REGISTRO NO LO PODRAS RECUPERAR...\n";
+		cout<<"ingresa la cedula:  ";
+  		cin>>Buscar;
+  		cout<<"\n\n\n\n\n\n";
+  		char cedulas[50];
+  		char cedulab[50];
+///////////////////////////////////////////////////////Ciclo que me busca por cedula///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+				while((recorre = getc(DataBase3)) != EOF)					
+						{  
+						if(recorre =='\n' )
+							{	
+							  i=1;							
+									
+							}else{	
+								cedulas[i]=recorre;
+								i++;					
+										
+								}
+							if(Buscar[volver]==recorre)
+							{  
+								volver++;
+								if(volver==(strlen(Buscar)))
+								{	
+								    encontro=true;				
+									system ("cls");				
+									cout<<"\n\n\nEncontre La Persona\n\n\n";
+									cout<<"\n\n__________________________________________________________________________________________________\n\n";
+									cout<<"Encontre A a la persona que buscas por la cedula para actulizar el registro:  "<<Buscar<<"\n\n\n";
+								}
+							}else if(encontro!=true){
+									volver=1;
+								} else if(recorre == '|' ){									
+									cout<<"\n";		
+									if(next==1&& nexti==false)
+										{
+										   i=1;
+										    N=1;
+											while(1){
+												if(cedulas[i]=='|'){												
+														break;												       
+												}else {
+													i++;
+												      }												
+											       }
+											cout<<"ID:  ";	
+											while(1){
+												if(i==N){													
+													cout<<"\n";
+													cout<<"cedula: "<<Buscar;
+													break;
+												}else{
+													cout<<cedulas[N];
+													N++;
+												}   
+												
+											}
+											N=1;								
+									    	cout<<"\nNombre:  ";	
+										 	next ++;
+										 	nexti=true;
+										 	
+									    }	
+										if(next==2 && nexti==false)
+											{
+										    	cout<<"Dia de nacimiento:  ";	
+											 	next ++;
+											 	nexti=true;
+										    }	
+											if(next==3&& nexti==false)
+												{
+											    	cout<<"Mes de nacimiento:  ";	
+												 	next ++;
+												 	nexti=true;
+											    }							
+	               								if(next==4 && nexti==false)
+													{
+												    	cout<<"anio de nacimiento:  ";	
+													 	nexti=true;
+													 	next++;	
+												    }
+													if(next==5 && nexti==false)
+													{
+												    	cout<<"Ganacia anual:  ";	
+													 	nexti=true;
+													 	next++;	
+												    }																				
+																							    		             
+											}else if(recorre=='\n'){
+												salto=true;
+												break;
+											}else if (salto!=true){ 																						
+													printf("%c",recorre);	
+													nexti=false;
+						                         }  		
+				  		               
+  		                }             
+  		                
+  		
+  	
+	if(encontro!=true){
+		 cout<<"\n\n\n NO SE ENCONTRO LA PERSONA..\n\n\n";
+		 
+		 }				
+		fclose(DataBase3);
+///////////////////////////////////////////////PETICION DE DATOS//////////////////////////////////////////////////////////////////////////////////////////////////					
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	if(encontro==true){
+	
+		DataBase3 = fopen("Base_Datos.txt","r+");
+		cout<<"\n\n\n..............ingresa los nuevos Datos del registro..............";
+		cout <<"\n\n\nidentificador:  ";
+		cin>>identificador3;			
+		cout <<"Cedula:  ";
+		cin>>cedula3;		
+		cout <<"Nombre:  "<<flush;
+		cin.get(); 
+		cin.getline(nombre3, sizeof(nombre3), '.');		
+		cout <<"Dia_nacimiento:  ";
+		cin>>Dia_nacimiento3;		
+		cout <<"Mes_nacimiento:  ";
+		cin>>Mes_nacimiento3;
+		cout <<"Ano_nacimiento:  ";
+		cin>>Ano_nacimiento3;
+		cout <<"Ganancia_anual:  ";
+		cin>>Ganancia_anual3;
+		i=1;
+		volver=1;
+		encontro=false;					
+		next=1;
+		nexti=false;
+		salto=false;
+		salto2=false;
+					while((recorre = getc(DataBase3)) != EOF)					
+						{ 
+						if(recorre =='\n' )
+							{	
+							  i=1;							
+									
+							}else{	
+								cedulaBe[i]=recorre;
+								i++;					
+										
+								}
+							if(Buscar[volver]==recorre)
+							{  
+								volver++;
+								if(volver==(strlen(Buscar)))
+								{	
+								    encontro=true;				
+									system ("cls");				
+									cout<<"\n\n\nEncontre La Persona\n\n\n";
+									cout<<"\n\n__________________________________________________________________________________________________\n\n";
+									cout<<"Se ha reemplazado la persona con registro de cedula:  "<<Buscar<<"\n\n\n";
+								}
+							}else if(encontro!=true){
+									volver=1;
+								} else if(recorre == '|' and salto2==false){
+									if(next==1&& nexti==false)
+										{   i=1;
+										    N=1;
+											while(1){
+												if(cedulaBe[i]=='|'){								
+														break;												       
+												}else {
+													i++;
+												      }												
+											       }	
+											while(1){												
+												if(i==N){													
+													cout<<"REGISTRO ACTUALIZADO  EXITOSAMENTE....";
+													borrar=	i+strlen(Buscar);																							
+													break;
+												}else{
+													N++;
+												}   
+												
+											}
+											N=1;
+											salto2=true;	
+										 	next ++;
+										 	nexti=true;
+										 	
+									    }															
+																							    		             
+											}else if(recorre=='\n'){
+												salto=true;
+												break;
+											}
+											else if (salto!=true){											
+											while(uno<=7){
+											    if(uno==0)
+												{			
+									            fseek(DataBase3,-(borrar+2), SEEK_CUR);
+												}
+												if(uno==0){
+									            fprintf(DataBase3,"%i|",identificador3);
+												fprintf(DataBase3,"%s|",cedula3);
+												fprintf(DataBase3,"%s|",nombre3);
+												fprintf(DataBase3,"%s|",Dia_nacimiento3);
+												fprintf(DataBase3,"%s|",Mes_nacimiento3);	
+												fprintf(DataBase3,"%i|",Ano_nacimiento3);
+												fprintf(DataBase3,"%i        ",Ganancia_anual3);	
+									            fflush(DataBase3);
+												}		
+
+									            uno++;
+									            
+									            nexti=false;
+									            next=1;
+												}
+											}
+				  		               
+  		                }
+  		                
+
+		}
+		
+		cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza.... \n\n\n";
+		cin>>continuar;
+		if(continuar == 's')
+		{
+			system ("cls");
+		}else{
+			system ("cls");
+			cout<<"Adios un placer Servirte\n\n\n";
+			salir=false;
+		}
+		fclose(DataBase3);
+	
 		break;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		case 7: 
-		cout<<"7";
   		DataBase3 = fopen("Base_Datos.txt","a+");
   		
   		cout<<"Ingresa Numero de registro para ir al registro:  ";
