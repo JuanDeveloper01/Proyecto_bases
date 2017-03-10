@@ -180,7 +180,12 @@ case 1:  {
 		    cout << endl;
 		
 		    fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
-		    while ( !feof( arch_persona ) ){    
+		    while ( !feof( arch_persona ) )
+			{    
+		    if(persona_aux.identificador==0){
+					fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );		    	
+			}else{
+			
 		        cout << "  ID: " << persona_aux.identificador << endl;
 		        cout << "  CEDULA: " << persona_aux.cedula << endl;
 		        cout << "  NOMBRE: " << persona_aux.nombre << endl;
@@ -191,6 +196,7 @@ case 1:  {
 		        cout << endl;
 		
 		        fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+		    	}
 		    }
 		
 		    cout << endl;
@@ -372,6 +378,77 @@ case 1:  {
 			 
 		case 5:
 		    {
+			
+				FILE* arch_persona = fopen("BaseDatos.LFB", "r+b");
+			
+			    t_persona persona_aux;
+				char  cedula_aux[20];
+				int pos_cedula=0;
+				bool encontrar= false;
+				cout<<"ingresa porfavor la cedula a buscar  *nota: si ELIMINAS sera irecuperable el registro: ";
+				cin>>cedula_aux;
+			    cout << endl;
+			    system("cls");
+			    cout << "  INGRESA LA CEDULA DE LA PERSONA A ELIMINAR:  "<<cedula_aux << endl;
+			    cout << "  ================================================================================" << endl;
+			    cout << endl;
+			
+			    fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+			    
+			    while ( !feof( arch_persona ) ){ 
+			    if((strcmp(persona_aux.cedula,cedula_aux))==0)
+						{	encontrar=true;
+					        break;
+						}else{
+							pos_cedula++;
+							fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+						}
+			        
+			    }
+			   if(encontrar==false){			   
+			    cout << endl;
+			    cout << "NO SE ENCONTRO LA PERSONA..." << endl;
+			    fclose(arch_persona);
+						}else{
+								cout << endl;
+							    cout << "He encontrado...la persona a 	ELIMINAR" << endl;							    			
+						        cout << "  ID: " << persona_aux.identificador << endl;
+						        cout << "  CEDULA: " << persona_aux.cedula << endl;
+						        cout << "  NOMBRE: " << persona_aux.nombre << endl;
+						        cout << "  DIA NACIMIENTO: " << persona_aux.Dia_nacimiento << endl;
+						        cout << "  MES NACIMIENTO: " << persona_aux.Mes_nacimiento << endl;
+						        cout << "  ANIO NACIMIENTO: " << persona_aux.Ano_nacimiento << endl;
+						        cout << "  GANANCIA ANUAL: " << persona_aux.Ganancia_anual << endl;
+						        cout << endl;
+							    t_persona persona_reemplazo;							    
+							    persona_reemplazo.identificador=0;                                    
+							    persona_reemplazo.Dia_nacimiento=0;
+								persona_reemplazo.Mes_nacimiento=0;
+								persona_reemplazo.Ano_nacimiento=0;
+								persona_reemplazo.Ganancia_anual=0;							    							    														
+							    							
+						        cout << endl;						  
+							    fseek ( arch_persona, pos_cedula * sizeof(t_persona), SEEK_SET );
+							    
+								fwrite (&persona_reemplazo, sizeof(t_persona), 1, arch_persona);							
+							    cout << "REGISTRO ELIMINADO EXITOSAMENTE.." << endl;
+							    
+							    fclose(arch_persona);
+				
+				
+							}
+						
+				cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
+				cin>>continuar;
+				if(continuar == 's')
+				{
+					system ("cls");
+				}else{
+					system ("cls");
+					cout<<"Adios un placer Servirte\n\n\n";
+					salir=false;
+				}
+		    	
 		    	
 		    	
 		    	
@@ -525,13 +602,14 @@ case 1:  {
 					{
 						cout << "EL ARCHIVO ORIGEN DE LA BASE DE DATOS NO EXISTE ...... INSERTAR ARCHIVO  ";
 						return 1;
-					}
-					
+					}				
 				
 			    t_persona persona_carga;
 			    
 				
 				fread ( &persona_carga, sizeof(t_persona), 1, DataBaseBP ); 
+				cout<<"\n\n\nEstos son los registro que hay en la base de datos extraida: ";
+				cout<<"=====================================================================================";
 				 while ( !feof( DataBaseBP) )
 				 	{	ip++;	
 						cout << endl;
@@ -541,11 +619,10 @@ case 1:  {
 				        cout << "  DIA NACIMIENTO: " << persona_carga.Dia_nacimiento << endl;
 				        cout << "  MES NACIMIENTO: " << persona_carga.Mes_nacimiento << endl;
 				        cout << "  ANIO NACIMIENTO: " << persona_carga.Ano_nacimiento << endl;
-				        cout << "  GANANCIA ANUAL: " << persona_carga.Ganancia_anual <<"aqui ta"<<tamano <<endl;
-				        cout << endl;				        
-						//fseek ( arch_persona, sizeof(t_persona), SEEK_END ); 						 		    
-			    		fseek(arch_personax,tamano*sizeof(t_persona),1,SEEK_SET );
-			    		fwrite(&persona_carga,sizeof(t_persona),arch_personax);
+				        cout << "  GANANCIA ANUAL: " << persona_carga.Ganancia_anual <<endl;
+				        cout << endl;				        					 		    
+			    		fseek(arch_personax,tamano*sizeof(t_persona),SEEK_SET );
+			    		fwrite(&persona_carga,sizeof(t_persona),1,arch_personax);
 						tamano++;						
 					 	fread ( &persona_carga, sizeof(t_persona), 1, DataBaseBP ); 	
 					}
