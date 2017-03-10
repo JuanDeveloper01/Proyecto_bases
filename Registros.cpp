@@ -26,6 +26,7 @@ FILE *DataBase2; //puntero que me apunta al fichero que quiero
 FILE *DataBaseB8;							
 FILE  *DataBaseBP;
 
+//CLASE O ESTRUCTURA PERSONA DONDE TENGO LA ESTRUCTURA DE MIS DATOS
 struct t_persona{
   long int identificador;															//variable que contiene el ID		
   char cedula[20];																	//variable que me contiene la cedula
@@ -36,7 +37,7 @@ struct t_persona{
   unsigned long int Ganancia_anual;
 };
 
-t_persona cargar_persona ();  // CARGAR STRUCT CON UN CLIENTE
+t_persona cargar_persona ();  // CARGAR STRUCT CON UNA PERSONA
 
 
 template <typename T> void write( FILE* , T ); // Etemplate para guardar en binario
@@ -167,7 +168,7 @@ case 1:  {
 	 {
 	 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	  	//Lectura del fichero 
+	  	//Lectura del fichero BINARIO
 		case 1: 
 		{
 		    FILE* arch_persona = fopen("BaseDatos.LFB", "rb");
@@ -652,18 +653,498 @@ case 1:  {
 	break;
 }
 case 2:
-	
-	
-	cout<<"hola mundo";
+	 system("cls");
+	 switch (modificar()) 
+	 {
+	 	
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	  	//Lectura del fichero 
+		case 1: 
+		{
+		    FILE* arch_persona = fopen("BaseDatos.LVB", "rb");
+		
+		    t_persona persona_aux;
+		
+		    cout << endl;
+		    cout << "  LISTADO DE PERSONAS EN LA BASE DE DATOS:" << endl;
+		    cout << "  ================================================================================" << endl;
+		    cout << endl;
+		
+		    fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+		    while ( !feof( arch_persona ) )
+			{    
+		    if(persona_aux.identificador==0){
+					fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );		    	
+			}else{
+			
+		        cout << "  ID: " << persona_aux.identificador << endl;
+		        cout << "  CEDULA: " << persona_aux.cedula << endl;
+		        cout << "  NOMBRE: " << persona_aux.nombre << endl;
+		        cout << "  DIA NACIMIENTO: " << persona_aux.Dia_nacimiento << endl;
+		        cout << "  MES NACIMIENTO: " << persona_aux.Mes_nacimiento << endl;
+		        cout << "  ANIO NACIMIENTO: " << persona_aux.Ano_nacimiento << endl;
+		        cout << "  GANANCIA ANUAL: " << persona_aux.Ganancia_anual << endl;
+		        cout << endl;
+		
+		        fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+		    	}
+		    }
+		
+		    cout << endl;
+		    cout << "Se completo la lectura del archivo..." << endl;
+		    fclose(arch_persona);	
+					
+			cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
+			cin>>continuar;
+			if(continuar == 's')
+			{
+				system ("cls");
+			}else{
+				system ("cls");
+				cout<<"Adios un placer Servirte\n\n\n";
+				salir=false;
+			}
+		
+			break;
+			
+			
+		}
 	
 		
 	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////Escritura de archivos binarios//////////////////////////////////////////////////////////////////////////////////////////7		    
+	
+		 
+		 case 2:
+		 	{
+			 
+		 	system("cls");			
+			FILE* arch_persona = fopen("BaseDatos.LVB", "ab");
+			
+			    string consulta = "si";
+			    t_persona persona_aux;
+			
+			    while ( consulta != "no" ){
+			        persona_aux = cargar_persona();
+			        fwrite( &persona_aux, sizeof(t_persona), 1, arch_persona );
+			        system ("cls");
+			        cout << "Desea cargar mas datos ( si/no ): ";
+			        cin>>consulta;
+			    }
+			
+			    cout << endl;
+			    system ("cls");
+			    cout << "La carga del archivo fue exitosa..." << endl;
+			    fclose(arch_persona);
+		   }
+		break;	   
+		
+		case 3:
+		    {
+		    	
+			    FILE* arch_persona = fopen("BaseDatos.LVB", "rb");
+			
+			    t_persona persona_aux;
+				char  cedula_aux[20];
+				bool encontrar= false;
+				cout<<"ingesa porfavor la cedula a buscar: ";
+				cin>>cedula_aux;
+			    cout << endl;
+			    system("cls");
+			    cout << "  BUSCAS LA PERSONA POR CEDULA:"<<cedula_aux << endl;
+			    cout << "  ================================================================================" << endl;
+			    cout << endl;
+			
+			    fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+			    
+			    while ( !feof( arch_persona ) ){ 
+			    if((strcmp(persona_aux.cedula,cedula_aux))==0)
+						{	encontrar=true;			
+					        cout << "  ID: " << persona_aux.identificador << endl;
+					        cout << "  CEDULA: " << persona_aux.cedula << endl;
+					        cout << "  NOMBRE: " << persona_aux.nombre << endl;
+					        cout << "  DIA NACIMIENTO: " << persona_aux.Dia_nacimiento << endl;
+					        cout << "  MES NACIMIENTO: " << persona_aux.Mes_nacimiento << endl;
+					        cout << "  ANIO NACIMIENTO: " << persona_aux.Ano_nacimiento << endl;
+					        cout << "  GANANCIA ANUAL: " << persona_aux.Ganancia_anual << endl;
+					        cout << endl;
+					        break;
+						}else{
+							fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+						}
+			        
+			    }
+			   if(encontrar==false){			   
+			    cout << endl;
+			    cout << "NO SE ENCONTRO LA PERSONA..." << endl;
+			    fclose(arch_persona);
+			}else{
+				cout << endl;
+			    cout << "He encontrado..." << endl;
+			    fclose(arch_persona);
+				
+				
+			}
+						
+				cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
+				cin>>continuar;
+				if(continuar == 's')
+				{
+					system ("cls");
+				}else{
+					system ("cls");
+					cout<<"Adios un placer Servirte\n\n\n";
+					salir=false;
+				}
+		   	
+		    	
+		    	
+		    	break;
+			 } 
+		
+		case 4:
+		    {
+		    	
+			    FILE* arch_persona = fopen("BaseDatos.LVB", "rb");
+			
+			    t_persona persona_aux;
+				char  nombre_aux[50];
+				bool encontrar= false;
+				cout<<"ingesa porfavor el nombre a buscar: "<<flush;
+				cin.get(); 
+				cin.getline(nombre_aux, sizeof(nombre_aux), '.');	
+			    system("cls");
+			    cout << "  BUSCAS LA PERSONA POR CEDULA:"<<nombre_aux << endl;
+			    cout << "  ================================================================================" << endl;
+			    cout << endl;
+			
+			    fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+			    
+			    while ( !feof( arch_persona ) ){ 
+			    if((strcmp(persona_aux.nombre,nombre_aux))==0)
+						{	encontrar=true;			
+					        cout << "  ID: " << persona_aux.identificador << endl;
+					        cout << "  CEDULA: " << persona_aux.cedula << endl;
+					        cout << "  NOMBRE: " << persona_aux.nombre << endl;
+					        cout << "  DIA NACIMIENTO: " << persona_aux.Dia_nacimiento << endl;
+					        cout << "  MES NACIMIENTO: " << persona_aux.Mes_nacimiento << endl;
+					        cout << "  ANIO NACIMIENTO: " << persona_aux.Ano_nacimiento << endl;
+					        cout << "  GANANCIA ANUAL: " << persona_aux.Ganancia_anual << endl;
+					        cout << endl;
+					        break;
+						}else{
+							fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+						}
+			        
+			    }
+			    
+			   if(encontrar==false){			   
+			    cout << endl;
+			    cout << "NO SE ENCONTRO LA PERSONA..." << endl;
+			    fclose(arch_persona);
+			}else{
+				cout << endl;
+			    cout << "He encontrado..." << endl;
+			    fclose(arch_persona);
+				
+				
+			}
+						
+				cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
+				cin>>continuar;
+				if(continuar == 's')
+				{
+					system ("cls");
+				}else{
+					system ("cls");
+					cout<<"Adios un placer Servirte\n\n\n";
+					salir=false;
+				}
+		    	
+		    	
+		    	
+		    	break;
+			 } 			 
+			 
+		case 5:
+		    {
+			
+				FILE* arch_persona = fopen("BaseDatos.LVB", "r+b");
+			
+			    t_persona persona_aux;
+				char  cedula_aux[20];
+				int pos_cedula=0;
+				bool encontrar= false;
+				cout<<"ingresa porfavor la cedula a buscar  *nota: si ELIMINAS sera irecuperable el registro: ";
+				cin>>cedula_aux;
+			    cout << endl;
+			    system("cls");
+			    cout << "  INGRESA LA CEDULA DE LA PERSONA A ELIMINAR:  "<<cedula_aux << endl;
+			    cout << "  ================================================================================" << endl;
+			    cout << endl;
+			
+			    fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+			    
+			    while ( !feof( arch_persona ) ){ 
+			    if((strcmp(persona_aux.cedula,cedula_aux))==0)
+						{	encontrar=true;
+					        break;
+						}else{
+							pos_cedula++;
+							fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+						}
+			        
+			    }
+			   if(encontrar==false){			   
+			    cout << endl;
+			    cout << "NO SE ENCONTRO LA PERSONA..." << endl;
+			    fclose(arch_persona);
+						}else{
+								cout << endl;
+							    cout << "He encontrado...la persona a 	ELIMINAR" << endl;							    			
+						        cout << "  ID: " << persona_aux.identificador << endl;
+						        cout << "  CEDULA: " << persona_aux.cedula << endl;
+						        cout << "  NOMBRE: " << persona_aux.nombre << endl;
+						        cout << "  DIA NACIMIENTO: " << persona_aux.Dia_nacimiento << endl;
+						        cout << "  MES NACIMIENTO: " << persona_aux.Mes_nacimiento << endl;
+						        cout << "  ANIO NACIMIENTO: " << persona_aux.Ano_nacimiento << endl;
+						        cout << "  GANANCIA ANUAL: " << persona_aux.Ganancia_anual << endl;
+						        cout << endl;
+							    t_persona persona_reemplazo;							    
+							    persona_reemplazo.identificador=0;                                    
+							    persona_reemplazo.Dia_nacimiento=0;
+								persona_reemplazo.Mes_nacimiento=0;
+								persona_reemplazo.Ano_nacimiento=0;
+								persona_reemplazo.Ganancia_anual=0;							    							    														
+							    							
+						        cout << endl;						  
+							    fseek ( arch_persona, pos_cedula * sizeof(t_persona), SEEK_SET );
+							    
+								fwrite (&persona_reemplazo, sizeof(t_persona), 1, arch_persona);							
+							    cout << "REGISTRO ELIMINADO EXITOSAMENTE.." << endl;
+							    
+							    fclose(arch_persona);
+				
+				
+							}
+						
+				cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
+				cin>>continuar;
+				if(continuar == 's')
+				{
+					system ("cls");
+				}else{
+					system ("cls");
+					cout<<"Adios un placer Servirte\n\n\n";
+					salir=false;
+				}
+		    	
+		    	
+		    	
+		    	
+		    	break;
+			 } 
+			 
+			 
+		case 6:
+		    {
+			
+				FILE* arch_persona = fopen("BaseDatos.LVB", "r+b");
+			
+			    t_persona persona_aux;
+				char  cedula_aux[20];
+				int pos_cedula=0;
+				bool encontrar= false;
+				cout<<"ingresa porfavor la cedula a buscar  *nota: si reemplazas sera irecuperable el registro: ";
+				cin>>cedula_aux;
+			    cout << endl;
+			    system("cls");
+			    cout << "  INGRESA LA CEDULA DE LA PERSONA A REEMPLAZAR:"<<cedula_aux << endl;
+			    cout << "  ================================================================================" << endl;
+			    cout << endl;
+			
+			    fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+			    
+			    while ( !feof( arch_persona ) ){ 
+			    if((strcmp(persona_aux.cedula,cedula_aux))==0)
+						{	encontrar=true;
+					        break;
+						}else{
+							pos_cedula++;
+							fread ( &persona_aux, sizeof(t_persona), 1, arch_persona );
+						}
+			        
+			    }
+			   if(encontrar==false){			   
+			    cout << endl;
+			    cout << "NO SE ENCONTRO LA PERSONA..." << endl;
+			    fclose(arch_persona);
+						}else{
+								cout << endl;
+							    cout << "He encontrado...la persona a reemplazar" << endl;							    			
+						        cout << "  ID: " << persona_aux.identificador << endl;
+						        cout << "  CEDULA: " << persona_aux.cedula << endl;
+						        cout << "  NOMBRE: " << persona_aux.nombre << endl;
+						        cout << "  DIA NACIMIENTO: " << persona_aux.Dia_nacimiento << endl;
+						        cout << "  MES NACIMIENTO: " << persona_aux.Mes_nacimiento << endl;
+						        cout << "  ANIO NACIMIENTO: " << persona_aux.Ano_nacimiento << endl;
+						        cout << "  GANANCIA ANUAL: " << persona_aux.Ganancia_anual << endl;
+						        cout << endl;
+							    t_persona persona_reemplazo;
+							    
+								persona_reemplazo = cargar_persona();								
+							    							
+						        cout << endl;						  
+							    fseek ( arch_persona, pos_cedula * sizeof(t_persona), SEEK_SET );
+							    
+								fwrite (&persona_reemplazo, sizeof(t_persona), 1, arch_persona);							
+							    cout << "modificacion de registro exitosa..." << endl;
+							    
+							    fclose(arch_persona);
+				
+				
+							}
+						
+				cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
+				cin>>continuar;
+				if(continuar == 's')
+				{
+					system ("cls");
+				}else{
+					system ("cls");
+					cout<<"Adios un placer Servirte\n\n\n";
+					salir=false;
+				}
+		    	
+		    	
+		    	
+		    	
+		    	break;
+			 } 			 			 
+			 
+		case 7:
+		    {
+						    	  
+				    FILE* arch_persona = fopen( "BaseDatos.LVB", "r+b");
+				    int pos=0;
+				    cout << endl;
+				
+				    // nos posicionamos en un registro en particular
+				
+				    // ejemplo 1: nos movemos tantos registros ( en este caso, pos )
+					cout<<"\n\n ingresa porfavor la posicion al registro que quieras ir...\n\n";
+				    cin>>pos;				
+				    fseek ( arch_persona, pos * sizeof(t_persona), SEEK_SET );
+				    
+				
+				    t_persona persona1;
+				    
+				    system("cls");
+				    fread ( &persona1, sizeof( t_persona ), 1, arch_persona );
+				
+				    cout << "  Saltamos al registro: "<<pos<< endl;
+				    cout << "  ======================" << endl;
+				    cout << endl;
+			        cout << "  ID: " << persona1.identificador << endl;
+			        cout << "  CEDULA: " << persona1.cedula << endl;
+			        cout << "  NOMBRE: " << persona1.nombre << endl;
+			        cout << "  DIA NACIMIENTO: " << persona1.Dia_nacimiento << endl;
+			        cout << "  MES NACIMIENTO: " << persona1.Mes_nacimiento << endl;
+			        cout << "  ANIO NACIMIENTO: " << persona1.Ano_nacimiento << endl;
+			        cout << "  GANANCIA ANUAL: " << persona1.Ganancia_anual << endl;
+			        cout << endl;
+				    cout << endl;
+					    	
+				    fclose(arch_persona);	
+							
+					cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
+					cin>>continuar;
+					if(continuar == 's')
+					{
+						system ("cls");
+					}else{
+						system ("cls");
+						cout<<"Adios un placer Servirte\n\n\n";
+						salir=false;
+					}					    	
+		    		    	
+		    	
+		    	break;
+			 } 
+			 
+		case 8:
+		    {
+		    	
+		    char data[50];
+			int ip=0;
+				cout<<"ingresa el nombre del archivo binario el cual se va a cargar:   ";
+				cin>>data;				
+		  		FILE* arch_persona = fopen( "BaseDatos.LVB", "r+b");							
+				DataBaseBP= fopen(data,"r+b");			
+				fseek ( arch_persona, 0, SEEK_END ); 			
+				int tam_total = ftell( arch_persona );	
+				int tamano=tam_total/sizeof(t_persona);				
+				fclose(arch_persona);
+						
+				FILE* arch_personax =fopen( "BaseDatos.LVB", "r+b");
+						
+				if (DataBaseBP == NULL)
+					{
+						cout << "EL ARCHIVO ORIGEN DE LA BASE DE DATOS NO EXISTE ...... INSERTAR ARCHIVO  ";
+						return 1;
+					}				
+				
+			    t_persona persona_carga;
+			    
+				
+				fread ( &persona_carga, sizeof(t_persona), 1, DataBaseBP ); 
+				cout<<"\n\n\nEstos son los registro que hay en la base de datos extraida: ";
+				cout<<"=====================================================================================";
+				 while ( !feof( DataBaseBP) )
+				 	{	ip++;	
+						cout << endl;
+				        cout << "  ID: " << persona_carga.identificador << endl;
+				        cout << "  CEDULA: " << persona_carga.cedula << endl;
+				        cout << "  NOMBRE: " << persona_carga.nombre << endl;
+				        cout << "  DIA NACIMIENTO: " << persona_carga.Dia_nacimiento << endl;
+				        cout << "  MES NACIMIENTO: " << persona_carga.Mes_nacimiento << endl;
+				        cout << "  ANIO NACIMIENTO: " << persona_carga.Ano_nacimiento << endl;
+				        cout << "  GANANCIA ANUAL: " << persona_carga.Ganancia_anual <<endl;
+				        cout << endl;				        					 		    
+			    		fseek(arch_personax,tamano*sizeof(t_persona),SEEK_SET );
+			    		fwrite(&persona_carga,sizeof(t_persona),1,arch_personax);
+						tamano++;						
+					 	fread ( &persona_carga, sizeof(t_persona), 1, DataBaseBP ); 	
+					}
+					
+				cout<<"\n\n\n " <<ip<<"  Registros Exportados con exito \n\n\n";		
+				cout<<"\n\n\n Fin... Presiona  S  para volver al menu principal o N para finaliza \n\n\n";
+				cin>>continuar;
+				if(continuar == 's')
+				{
+					system ("cls");
+				}else{
+					system ("cls");
+					cout<<"Adios un placer Servirte\n\n\n";
+					salir=false;
+				}
+				fclose(arch_personax);
+				fclose(DataBaseBP);	
+		    	
+		    	
+		    	
+		    	break;
+			 } 			 			 
+
+	}
 	
 	
 	
 	
 	
-break;
+	
+	break;
  //programa de registros en modo txt  
  case 3: 	
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
